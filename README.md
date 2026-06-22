@@ -1,61 +1,230 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Mustafa Backend (Laravel API)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Backend API and Administration Panel for the Mustafa Hasb Sido Portfolio & Digital Marketing Platform.
 
-## About Laravel
+Built with Laravel, Sanctum Authentication, and a bilingual architecture (Arabic / English).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* PHP 8.2 or higher
+* Composer
+* MySQL / MariaDB
+* Web Server (Apache or Nginx)
+* Symbolic Link Support (`storage:link`)
 
-## Learning Laravel
+> Recommended PHP Version: **8.2.31** (development environment)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Install Dependencies
 
-## Laravel Sponsors
+```bash
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+If you encounter dependency conflicts related to Google Analytics packages:
 
-### Premium Partners
+```bash
+composer install --ignore-platform-reqs
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+### 2. Environment Configuration
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Copy the example environment file:
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Update the following values:
 
-## Security Vulnerabilities
+```env
+APP_NAME="Mustafa Hasb Sido"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://www.mustafahasbsido.com 
+ده الدومين
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mustafa_data
+DB_USERNAME=
+DB_PASSWORD=
 
-## License
+SANCTUM_STATEFUL_DOMAINS=www.mustafahasbsido.com
+SESSION_DOMAIN=.www.mustafahasbsido.com 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+GOOGLE_ANALYTICS_PROPERTY_ID=
+GOOGLE_APPLICATION_CREDENTIALS=storage/app/google-analytics-credentials.json
+```
+
+---
+
+## Database Setup
+
+A database backup file is provided separately:
+
+```text
+mustafa_backup.sql
+```
+
+Import it using phpMyAdmin or MySQL CLI:
+
+```bash
+mysql -u username -p database_name < mustafa_backup.sql
+```
+
+---
+
+## Storage Link
+
+Required for uploaded files:
+
+```bash
+php artisan storage:link
+```
+
+Uploaded assets include:
+
+* Blog Images
+* Portfolio Images
+* Service Images
+* Gallery Files
+
+---
+
+## Uploaded Files
+
+A separate archive containing:
+
+```text
+storage/app/public
+```
+
+must be extracted into:
+
+```text
+storage/app/public
+```
+
+on the production server.
+
+---
+
+## Google Analytics Credentials
+
+A Google Service Account JSON file is delivered separately.
+
+Place it here:
+
+```text
+storage/app/google-analytics-credentials.json
+```
+
+---
+
+## Production Optimization
+
+After completing the environment configuration:
+
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+---
+
+## Folder Permissions
+
+```bash
+chmod -R 775 storage bootstrap/cache
+```
+
+---
+
+## Development Notes
+
+### Route Order
+
+Static routes such as:
+
+```text
+/categories
+/tags
+/reorder
+/trashed
+```
+
+must appear before dynamic routes:
+
+```text
+/{id}
+```
+
+to prevent route conflicts.
+
+---
+
+### JSON Casts
+
+The following fields require explicit array casting:
+
+```php
+gallery
+tags
+results
+list_desc_ar
+list_desc_en
+```
+
+---
+
+### FormData Updates
+
+When updating records using FormData:
+
+```text
+_method = PUT
+```
+
+must be included.
+
+Arrays should be sent as:
+
+```text
+category_ids[]
+```
+
+---
+
+## Deployment Checklist
+
+* Composer dependencies installed
+* Environment variables configured
+* Database imported
+* Storage link created
+* Uploaded media copied
+* Google Analytics credentials configured
+* APP_DEBUG disabled
+* Sanctum authentication functioning
+* Routes and config cached
+
+---
+
+## Technology Stack
+
+* Laravel
+* Sanctum
+* MySQL
+* Google Analytics Data API
+* REST API Architecture
+* Bilingual Content Management
