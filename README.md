@@ -24,6 +24,8 @@ Built with Laravel, Sanctum Authentication, and a bilingual architecture (Arabic
 
 ```bash
 composer install
+
+php artisan migrate
 ```
 
 If you encounter dependency conflicts related to Google Analytics packages:
@@ -49,8 +51,7 @@ Update the following values:
 APP_NAME="Mustafa Hasb Sido"
 APP_ENV=production
 APP_DEBUG=false
-APP_URL=https://www.mustafahasbsido.com 
-ده الدومين
+APP_URL=https://api.mustafahasbsido.com
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -59,8 +60,8 @@ DB_DATABASE=mustafa_data
 DB_USERNAME=
 DB_PASSWORD=
 
-SANCTUM_STATEFUL_DOMAINS=www.mustafahasbsido.com
-SESSION_DOMAIN=.www.mustafahasbsido.com 
+SANCTUM_STATEFUL_DOMAINS=mustafahasbsido.com,www.mustafahasbsido.com
+SESSION_DOMAIN=.mustafahasbsido.com
 
 GOOGLE_ANALYTICS_PROPERTY_ID=
 GOOGLE_APPLICATION_CREDENTIALS=storage/app/google-analytics-credentials.json
