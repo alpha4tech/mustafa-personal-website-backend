@@ -27,32 +27,34 @@ class ProfileController extends Controller
      * Update user profile
      */
     public function updateProfile(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
-            // 'department' => 'nullable|string|max:255',
-            // 'bio' => 'nullable|string'
-        ]);
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        'phone' => 'nullable|string|max:20',
+        'password' => 'nullable|string|min:8',
+    ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            // 'department' => $request->department,
-            // 'bio' => $request->bio
-        ]);
+    $data = [
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+    ];
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Profile updated successfully',
-            'data' => $user
-        ]);
+    if ($request->filled('password')) {
+        $data['password'] = Hash::make($request->password);
     }
 
+    $user->update($data);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Profile updated successfully',
+        'data' => $user
+    ]);
+}
     /**
      * Update user avatar
      */
